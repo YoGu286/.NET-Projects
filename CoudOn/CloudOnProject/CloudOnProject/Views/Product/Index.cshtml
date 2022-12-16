@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CloudOnProject.Models.Product>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"> </script>
+                        
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Product List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> &nbsp; Create New Product
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Count() > 0)
+    {
+        <table id="example" class="table table-bordered table-striped dt-responsive nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Product Id</th>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Name</th>
+                    <th>Barcode</th>
+                    <th> Retail Price</th>
+                    <th>Wholesale Price</th>
+                    <th>Discount</th>
+                    <th>Buttons</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var obj in Model)
+                {
+                <tr>
+                    <td width="10%">@obj.ExternalId</td>
+                    <td width="10%">@obj.Code</td>
+                    <td width="10%">@obj.Description</td>
+                    <td width="10%">@obj.Name</td>
+                    <td width="10%">@obj.Barcode</td>
+                    <td width="10%">@obj.RetailPrice</td>
+                    <td width="10%">@obj.WholesalePrice</td>
+                    <td width="10%">@obj.Discount</td>
+                    <td class="text-center">
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Product" asp-route-Id="@obj.ExternalId" asp-action="Edit" class="btn btn-primary mx-2">
+                                <i class="fas fa-edit"></i>  
+                            </a>
+                            <a asp-controller="Product" asp-route-Id="@obj.ExternalId" asp-action="Delete" class="btn btn-danger mx-2">
+                                <i class="far fa-trash-alt"></i> 
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        
+
+            <script >
+                var js = jQuery.noConflict(true);
+                js(document).ready(function () {
+                    js('#example').DataTable({
+                        "paging": true
+                    });
+                });
+            </script>
+        </table>
+    }
+    else
+    {
+        <p> No product exists.</p>
+    }
+
+</div>
+
